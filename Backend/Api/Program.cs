@@ -5,11 +5,13 @@ using Application.Features.Registrations.GetRegistrations;
 using Application.Features.Registrations.GetRegistrationById;
 using Application.Features.Registrations.GetRegistrationSummary;
 using Api.SeedData;
+using Api.Features.Registrations;
 using Domain.Common;
 using FluentValidation;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,8 @@ builder.Services.AddDbContext<IAppDbContext, AppDbContext>(options =>
 
 // Validators
 builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
+builder.Services.ConfigureHttpJsonOptions(options =>
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 // Handlers
 builder.Services.AddScoped<
@@ -68,6 +72,6 @@ if (app.Environment.IsDevelopment())
 app.MapGet("/", () => "Welcome to the Vertical Slice API! Go to /scalar/v1 for API documentation.");
 
 // Map endpoints
-// app.Map{FeatureGroup}Endpoints();
+app.MapRegistrationEndpoints();
 
 app.Run();
