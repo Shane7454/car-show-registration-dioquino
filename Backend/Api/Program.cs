@@ -4,6 +4,7 @@ using Application.Features.Registrations.CreateRegistration;
 using Application.Features.Registrations.GetRegistrations;
 using Application.Features.Registrations.GetRegistrationById;
 using Application.Features.Registrations.GetRegistrationSummary;
+using Api.SeedData;
 using Domain.Common;
 using FluentValidation;
 using Infrastructure.Persistence;
@@ -52,9 +53,8 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-    // dbContext.<Entities>.AddRange(...);
-
     dbContext.Database.Migrate();
+    await RegistrationSeeder.SeedAsync(dbContext);
 }
 
 // Configure the HTTP request pipeline
