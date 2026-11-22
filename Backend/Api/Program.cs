@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Database
 builder.Services.AddDbContext<IAppDbContext, AppDbContext>(options =>
-    options.UseInMemoryDatabase("VerticalSliceDb"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Validators
 builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
@@ -40,7 +40,7 @@ using (var scope = app.Services.CreateScope())
 
     // dbContext.<Entities>.AddRange(...);
 
-    dbContext.SaveChanges();
+    dbContext.Database.Migrate();
 }
 
 // Configure the HTTP request pipeline
