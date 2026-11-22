@@ -3,6 +3,7 @@ using Application.Abstractions.Messaging;
 using Application.Features.Registrations.CreateRegistration;
 using Application.Features.Registrations.GetRegistrations;
 using Application.Features.Registrations.GetRegistrationById;
+using Application.Features.Registrations.GetRegistrationSummary;
 using Domain.Common;
 using FluentValidation;
 using Infrastructure.Persistence;
@@ -28,6 +29,9 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
     IQueryHandler<GetRegistrationByIdQuery, Result<GetRegistrationByIdResponse>>,
     GetRegistrationByIdHandler>();
+builder.Services.AddScoped<
+    IQueryHandler<GetRegistrationSummaryQuery, Result<GetRegistrationSummaryResponse>>,
+    GetRegistrationSummaryHandler>();
 
 // API
 builder.Services.AddEndpointsApiExplorer();
