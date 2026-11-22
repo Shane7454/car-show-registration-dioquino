@@ -2,6 +2,7 @@ using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Application.Features.Registrations.CreateRegistration;
 using Application.Features.Registrations.GetRegistrations;
+using Application.Features.Registrations.GetRegistrationById;
 using Domain.Common;
 using FluentValidation;
 using Infrastructure.Persistence;
@@ -24,6 +25,9 @@ builder.Services.AddScoped<
 builder.Services.AddScoped<
     IQueryHandler<GetRegistrationsQuery, Result<GetRegistrationsResponse>>,
     GetRegistrationsHandler>();
+builder.Services.AddScoped<
+    IQueryHandler<GetRegistrationByIdQuery, Result<GetRegistrationByIdResponse>>,
+    GetRegistrationByIdHandler>();
 
 // API
 builder.Services.AddEndpointsApiExplorer();
