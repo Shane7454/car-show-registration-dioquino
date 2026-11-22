@@ -1,6 +1,7 @@
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Application.Features.Registrations.CreateRegistration;
+using Application.Features.Registrations.GetRegistrations;
 using Domain.Common;
 using FluentValidation;
 using Infrastructure.Persistence;
@@ -20,7 +21,9 @@ builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
 builder.Services.AddScoped<
     ICommandHandler<CreateRegistrationCommand, Result<CreateRegistrationResponse>>,
     CreateRegistrationHandler>();
-// builder.Services.AddScoped<IQueryHandler<TQuery, Result<TResponse>>, TQueryHandler>();
+builder.Services.AddScoped<
+    IQueryHandler<GetRegistrationsQuery, Result<GetRegistrationsResponse>>,
+    GetRegistrationsHandler>();
 
 // API
 builder.Services.AddEndpointsApiExplorer();
