@@ -23,6 +23,11 @@ builder.Services.AddDbContext<IAppDbContext, AppDbContext>(options =>
 builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
 builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddCors(options => options.AddPolicy("ReactFrontend", policy =>
+    policy
+        .WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod()));
 
 // Handlers
 builder.Services.AddScoped<
@@ -51,6 +56,8 @@ builder.Services.AddOpenApi(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors("ReactFrontend");
 
 // Seed data
 using (var scope = app.Services.CreateScope())
