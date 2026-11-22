@@ -1,5 +1,6 @@
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
+using Application.Features.Registrations.CreateRegistration;
 using Domain.Common;
 using FluentValidation;
 using Infrastructure.Persistence;
@@ -16,7 +17,9 @@ builder.Services.AddDbContext<IAppDbContext, AppDbContext>(options =>
 builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
 
 // Handlers
-// builder.Services.AddScoped<ICommandHandler<TCommand, Result<TResponse>>, TCommandHandler>();
+builder.Services.AddScoped<
+    ICommandHandler<CreateRegistrationCommand, Result<CreateRegistrationResponse>>,
+    CreateRegistrationHandler>();
 // builder.Services.AddScoped<IQueryHandler<TQuery, Result<TResponse>>, TQueryHandler>();
 
 // API
